@@ -1,0 +1,6 @@
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\bin\RESTService.dll.config
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\bin\RESTService.dll
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\bin\RESTService.pdb
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\obj\Release\RESTService.csprojResolveAssemblyReference.cache
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\obj\Release\RESTService.dll
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\obj\Release\RESTService.pdb

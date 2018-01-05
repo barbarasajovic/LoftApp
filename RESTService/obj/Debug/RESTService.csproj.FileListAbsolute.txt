@@ -1,0 +1,83 @@
+c:\users\slavkoz\documents\visual studio 2015\Projects\RESTService\RESTService\bin\RESTService.dll.config
+c:\users\slavkoz\documents\visual studio 2015\Projects\RESTService\RESTService\bin\RESTService.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\RESTService\RESTService\bin\RESTService.pdb
+c:\users\slavkoz\documents\visual studio 2015\Projects\RESTService\RESTService\obj\Debug\RESTService.csprojResolveAssemblyReference.cache
+c:\users\slavkoz\documents\visual studio 2015\Projects\RESTService\RESTService\obj\Debug\RESTService.dll
+c:\users\slavkoz\documents\visual studio 2015\Projects\RESTService\RESTService\obj\Debug\RESTService.pdb
+C:\Users\slavkoz\Documents\Visual Studio 2015\Projects\Vaja19_VS\RESTService\bin\RESTService.dll.config
+C:\Users\slavkoz\Documents\Visual Studio 2015\Projects\Vaja19_VS\RESTService\bin\RESTService.dll
+C:\Users\slavkoz\Documents\Visual Studio 2015\Projects\Vaja19_VS\RESTService\bin\RESTService.pdb
+C:\Users\slavkoz\Documents\Visual Studio 2015\Projects\Vaja19_VS\RESTService\obj\Debug\RESTService.csprojResolveAssemblyReference.cache
+C:\Users\slavkoz\Documents\Visual Studio 2015\Projects\Vaja19_VS\RESTService\obj\Debug\RESTService.dll
+C:\Users\slavkoz\Documents\Visual Studio 2015\Projects\Vaja19_VS\RESTService\obj\Debug\RESTService.pdb
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\bin\RESTService.dll.config
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\bin\RESTService.dll
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\bin\RESTService.pdb
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\obj\Debug\RESTService.csprojResolveAssemblyReference.cache
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\obj\Debug\RESTService.dll
+C:\Users\lrkadmin\Desktop\Vaja19_VS\RESTService\obj\Debug\RESTService.pdb
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\RESTService.dll.config
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\RESTService.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\RESTService.pdb
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Newtonsoft.Json.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\System.Net.Http.Formatting.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\System.Web.Http.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\System.Web.Http.WebHost.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Newtonsoft.Json.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\System.Net.Http.Formatting.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\System.Web.Http.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\System.Web.Http.WebHost.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\obj\Debug\RESTService.csprojResolveAssemblyReference.cache
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\obj\Debug\RESTService.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\obj\Debug\RESTService.pdb
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.Azure.KeyVault.Core.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.Data.Edm.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.Data.OData.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.Data.Services.Client.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.WindowsAzure.Diagnostics.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.WindowsAzure.Storage.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\System.Spatial.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\MonAgentListener.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.Azure.KeyVault.Core.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.Data.Edm.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.Data.OData.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.Data.Services.Client.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.WindowsAzure.Storage.pdb
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\Microsoft.WindowsAzure.Storage.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\System.Spatial.xml
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\de\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\es\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\fr\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\it\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ja\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ko\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ru\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\de\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\es\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\fr\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\it\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ja\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ko\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ru\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\de\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\es\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\fr\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\it\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ja\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ko\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ru\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\zh-Hans\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\zh-Hant\Microsoft.Data.Services.Client.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\de\System.Spatial.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\es\System.Spatial.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\fr\System.Spatial.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\it\System.Spatial.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ja\System.Spatial.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ko\System.Spatial.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\ru\System.Spatial.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\zh-Hans\System.Spatial.resources.dll
+C:\Users\Ema\Desktop\faks\IS\RESTNovo\REST\RESTService\bin\zh-Hant\System.Spatial.resources.dll
