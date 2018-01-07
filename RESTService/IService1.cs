@@ -40,6 +40,7 @@ namespace RESTService
         void RemoveSL(string ID, string IDs);
         [WebInvoke(UriTemplate = "AddNewUserToSL/{ID}/{IDs}", ResponseFormat = WebMessageFormat.Json, Method = "DELETE")]
         void RemoveYouFromSL(string ID, string IDs);
+        
     }
 
 
