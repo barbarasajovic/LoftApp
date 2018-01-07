@@ -394,16 +394,7 @@ namespace RESTService
 
         }
 
-       
-        public void RemoveSL(string ID, string IDs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveYouFromSL(string ID, string IDs)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
       
 }

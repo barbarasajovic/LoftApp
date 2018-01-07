@@ -34,12 +34,10 @@ namespace RESTService
         [OperationContract]
         [WebInvoke(UriTemplate = "SaveItem/{IDs}/{Ime}/{Cena}/{IDdodal}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
         bool SaveItem(string IDs, string Ime, string Cena, string IDdodal, string IDkupu);
+        [OperationContract]
         [WebInvoke(UriTemplate = "AddNewUserToSL/{IDs}/{Mail}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
         void AddNewUserToSL(string IDs, string Mail);
-        [WebInvoke(UriTemplate = "RemoveSL/{ID}/{IDs}", ResponseFormat = WebMessageFormat.Json, Method = "DELETE")]
-        void RemoveSL(string ID, string IDs);
-        [WebInvoke(UriTemplate = "AddNewUserToSL/{ID}/{IDs}", ResponseFormat = WebMessageFormat.Json, Method = "DELETE")]
-        void RemoveYouFromSL(string ID, string IDs);
+        
         
     }
 
