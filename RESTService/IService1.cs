@@ -24,7 +24,7 @@ namespace RESTService
         List<Items> GetItems(string IDs);
         [OperationContract]
         [WebGet(UriTemplate = "Login/{username}/{password}", ResponseFormat = WebMessageFormat.Json)]
-        string Login(string username, string password);
+        int Login(string username, string password);
         [OperationContract]
         [WebInvoke(UriTemplate = "Registration/{username}/{password}/{Ime}/{Priimek}/{number}/{mail}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
         bool Registration(string username, string password, string Ime, string Priimek, string number, string mail);
@@ -48,7 +48,7 @@ namespace RESTService
     public class Items
     {
         [DataMember]
-        public string IDi { get; set; }
+        public int IDi { get; set; }
         [DataMember]
         public string Ime { get; set; }
         [DataMember]
@@ -65,7 +65,7 @@ namespace RESTService
     public class User
     {
         [DataMember]
-        public Int32 ID{ get; set; }
+        public int ID{ get; set; }
         [DataMember]
         public string Ime { get; set; }
         [DataMember]
@@ -81,7 +81,7 @@ namespace RESTService
     public class ShoppingList
     {
         [DataMember]
-        public string IDs { get; set; }
+        public int IDs { get; set; }
         [DataMember]
         public string Ime { get; set; }
     }
@@ -90,7 +90,7 @@ namespace RESTService
     public class Vmesna
     {
         [DataMember]
-        public string ID { get; set; }
+        public int ID { get; set; }
         [DataMember]
         public string IDs { get; set; }
     }
