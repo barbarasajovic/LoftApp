@@ -3,4 +3,7 @@
   <parameter name="LoftAppConnectionString-Web.config Connection String" description="LoftAppConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=loftapp.database.windows.net;Initial Catalog=LoftApp;User ID=loftappadmin;Password=#LoftApp17" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="D:\\FRI\\3\ letnik\\EMP\\REST\\RESTService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='LoftAppConnectionString']/@connectionString" />
   </parameter>
+  <parameter name="LoftApp2ConnectionString-Web.config Connection String" description="LoftApp2ConnectionString Connection String used in web.config by the application to access the database." defaultValue="Data Source=loftapp2.database.windows.net;Initial Catalog=LoftApp2;User ID=loftappadmin;Password=#LoftApp17" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\FRI\\3\ letnik\\EMP\\REST\\RESTService\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='LoftApp2ConnectionString']/@connectionString" />
+  </parameter>
 </parameters>
