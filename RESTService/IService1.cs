@@ -32,7 +32,7 @@ namespace RESTService
         [WebGet(UriTemplate = "CreateNewShoppingList/{IDu}/{ImeSL}", ResponseFormat = WebMessageFormat.Json)]
         int CreateNewShopingList(string IDu, string ImeSL);
         [OperationContract]
-        [WebGet(UriTemplate = "SaveItem/{IDs}/{Ime}//{IDdodal}/", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "SaveItem/{IDs}/{Ime}/{IDdodal}", ResponseFormat = WebMessageFormat.Json)]
         bool SaveItem(string IDs, string Ime, string IDdodal);
         [OperationContract]
         [WebGet(UriTemplate = "AddNewUserToSL/{IDs}/{Mail}", ResponseFormat = WebMessageFormat.Json)]
@@ -50,13 +50,13 @@ namespace RESTService
         [DataMember]
         public string Ime { get; set; }
         [DataMember]
-        public string Cena { get; set; }
+        public decimal Cena { get; set; }
         [DataMember]
-        public string ključKdoDodal { get; set; }
+        public int IDdodal { get; set; }
         [DataMember]
-        public string KljučKdoKupil { get; set; }
+        public int IDkupil { get; set; }
         [DataMember]
-        public string IDs { get; set; }
+        public int IDs { get; set; }
     }
 
     [DataContract]

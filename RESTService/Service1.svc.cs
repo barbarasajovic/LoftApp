@@ -23,7 +23,7 @@ namespace RESTService
         {
             string geslo = null;
 
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString))
             {
                 string cmd = "Select Password from \"User\" where Username = @username";
                 
@@ -113,9 +113,9 @@ namespace RESTService
         public List<Items> GetItems(string IDs)
         {
             var ret = new List<Items>();
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             conn.Open();
-            string pridobi = "Select ID, Name from \"ShoppingListItem\" where Sho_ID = \'@id\'";
+            string pridobi = "Select ID, Name, Price, AddedBy_ID, BoughtBy_ID, Sho_ID from \"ShoppingListItem\" where Sho_ID = @id";
             SqlCommand comm = new SqlCommand(pridobi, conn);
             comm.Parameters.AddWithValue("@id", int.Parse(IDs));
             try {
@@ -128,7 +128,7 @@ namespace RESTService
                         {
                             while (reader.Read())
                             {
-                                ret.Add(new Items { IDi = reader.GetInt32(0), Ime = reader.GetString(1) });
+                                ret.Add(new Items { IDi = reader.GetInt32(0), Ime = reader.GetString(1), Cena = reader.GetDecimal(2), IDdodal = reader.GetInt32(3), IDkupil = reader.GetInt32(4), IDs = reader.GetInt32(5) });
                             }   
                         }
                         conn.Close();
@@ -149,8 +149,8 @@ namespace RESTService
             int ids = 0;
             //int stevilo = 0;
             List<ShoppingList> ret = new List<ShoppingList>();
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
-            SqlConnection connx = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
+            SqlConnection connx = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             connx.Open();
             conn.Open();
             string sql = "Select Sho_ID from \"ShoppingList_Users\" where ID = '" + int.Parse(ID) + "'";
@@ -188,7 +188,8 @@ namespace RESTService
                             {
                                 comma.Parameters.AddWithValue("@id", (int) item);
                                 ids = (int)item;*/
-                            comma.Parameters.AddWithValue("@id", reader.GetInt32(0));
+                            ids = reader.GetInt32(0);
+                            comma.Parameters.AddWithValue("@id", ids);
                             using (var comman = comma)
                                 {
                                     using (var reader1 = comman.ExecuteReader())
@@ -222,7 +223,7 @@ namespace RESTService
         public List<User> GetUsers()
         {
             var ret = new List<User>();
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             conn.Open();
             string sql = "SELECT ID, Name, Surname, Username, Password FROM \"User\"";
             SqlCommand comm = new SqlCommand(sql, conn);
@@ -257,7 +258,7 @@ namespace RESTService
 
             if (cookie != null)
             {
-                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
                 conn.Open();
                 string sql = "select ID from \"User\" where Username = @username";
                 SqlCommand comm = new SqlCommand(sql, conn);
@@ -291,10 +292,11 @@ namespace RESTService
         {
             /*try
             {*/
-                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
                 conn.Open();
-                string preveriUporabnika = "INSERT INTO \"User\" (Name,Surname, Phonenumber,Mail, Password, Username) VALUES (@Ime, @Priimek, @number, @Mail, @Geslo, @Username)";
-                SqlCommand comm = new SqlCommand(preveriUporabnika, conn);
+                string sql = "INSERT INTO \"User\" (Name,Surname, Phonenumber,Mail, Password, Username) VALUES (@Ime, @Priimek, @number, @Mail, @Geslo, @Username)";
+                string sql2 = "INSERT INTO \"User\" (Name,Surname, Phonenumber,Mail, Password, Username) VALUES (@Ime, @Priimek, @number, @Mail, @Geslo, @Username)";
+                SqlCommand comm = new SqlCommand(sql, conn);
                 comm.Parameters.AddWithValue("@Username", username);
                 comm.Parameters.AddWithValue("@Ime", Ime);
                 comm.Parameters.AddWithValue("@Priimek", Priimek);
@@ -314,7 +316,7 @@ namespace RESTService
         }
         public int CreateNewShopingList(string IDu, string ImeSL)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             conn.Open();
             int id = 0;
             string sql = "Insert into \"ShoppingList\" (Name) values (@ime)";
@@ -370,16 +372,17 @@ namespace RESTService
         public bool SaveItem(string IDs, string Ime, string IDdodal)
         {
             int Cena = 0;
+            int kupu = 0;
 
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             conn.Open();
-            string sql = "Insert into \"ShoppingListItem\" (Name,Price, AddedBy_ID, BoughtBy_ID, Sho_ID) values ( @Ime,@Cena, @IDdodal, @IDkupu, @IDs)";
+            string sql = "Insert into \"ShoppingListItem\" (Name,Price, AddedBy_ID, BoughtBy_ID ,Sho_ID) values ( @Ime,@Cena, @IDdodal, @IDkupu, @IDs)";
             SqlCommand comm = new SqlCommand(sql, conn);
             comm.Parameters.AddWithValue("@Ime", Ime);
             comm.Parameters.AddWithValue("@Cena", Cena);
             comm.Parameters.AddWithValue("@IDdodal", IDdodal);
+            comm.Parameters.AddWithValue("@IDkupu", kupu);
             comm.Parameters.AddWithValue("@IDs", int.Parse(IDs));
-
 
             try
             {
@@ -398,7 +401,7 @@ namespace RESTService
             int id = 0;
             string sql = "Select ID from \"Users\" where Mail = @Mail";
             string sql2 = "Insert into \"ShoppingList_Users\"(ID, Sho_ID) values (@id, @IDs)";
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             conn.Open();
             SqlCommand comm = new SqlCommand(sql, conn);
             comm.Parameters.AddWithValue("@Mail", Mail);

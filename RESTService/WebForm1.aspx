@@ -11,7 +11,7 @@
     <div>
     
     </div>
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:LoftAppConnectionString %>" DeleteCommand="DELETE FROM [ShoppingList] WHERE [ID] = @ID" InsertCommand="INSERT INTO [ShoppingList] ([ID], [Name]) VALUES (@ID, @Name)" SelectCommand="SELECT * FROM [ShoppingList]" UpdateCommand="UPDATE [ShoppingList] SET [Name] = @Name WHERE [ID] = @ID">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:LoftApp2ConnectionString %>" DeleteCommand="DELETE FROM [ShoppingList] WHERE [ID] = @ID" InsertCommand="INSERT INTO [ShoppingList] ([ID], [Name]) VALUES (@ID, @Name)" SelectCommand="SELECT * FROM [ShoppingList]" UpdateCommand="UPDATE [ShoppingList] SET [Name] = @Name WHERE [ID] = @ID">
             <DeleteParameters>
                 <asp:Parameter Name="ID" Type="Int32" />
             </DeleteParameters>
