@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -8,57 +9,82 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.ServiceModel;
+using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
 
+
 namespace RESTService
 {
+ 
     public class Service1 : IService1
     {
         public static string Authenticate(string username, string password)
         {
-            DataTable data = new DataTable();
+            string geslo = null;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString))
             {
-                string cmd = "Select password from \"Uporabnik\" where username = @username";
+                string cmd = "Select Password from \"User\" where Username = @username";
+                
 
                 connection.Open();
-                using (SqlCommand command = new SqlCommand(cmd, connection))
+                /*using (SqlCommand command = new SqlCommand(cmd, connection))
                 {
                     command.Parameters.Add(new SqlParameter("@username", username));
                     using (SqlDataAdapter da = new SqlDataAdapter(command))
                     {
                         da.Fill(data);
                     }
-                }
+                }*/
+                SqlCommand comm = new SqlCommand(cmd, connection);
+                comm.Parameters.AddWithValue("@username", username);
+                /*try
+                {*/
+                //comm.ExecuteNonQuery();
+                using (var command = comm)
+                    {
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    geslo = reader.GetString(0);
+                                }
 
-                connection.Close();
-            }
+                                connection.Close();
+                            }
+                        }
+                    }
 
-            if (data.Rows.Count > 0)
-            {
-                string hashGesloTable = (string)data.Rows[0][0];
+                    if (geslo != null)
+                    {
+                        string hashGesloTable = geslo;
 
-                //byte[] hashGeslo = ComputeHash.ComputeHashMD5(password);
+                        string hashGeslo = MD5Hash(password);
 
-                string hashGeslo = MD5Hash(password);
+                        if (hashGeslo.Equals(hashGesloTable))
+                        {
+                            //
+                            Random rnd = new Random();
 
-                if (hashGeslo.Equals(hashGesloTable))
+                            int coo = rnd.Next(1, Int32.MaxValue);
+
+                            return "cookie" + coo;
+
+                        }
+                        return null;
+
+                    }
+
+                    return null;
+               /* }
+                catch (Exception)
                 {
-                    //
-                    Random rnd = new Random();
-
-                    int coo = rnd.Next(1, Int32.MaxValue);
-
-                    return "cookie" + coo;
-
-                }
-                return null;
-
+                    throw new Exception("Napaka.");
+                }*/
             }
-
-            return null;
         }
 
         public static string MD5Hash(string text)
@@ -89,11 +115,11 @@ namespace RESTService
             var ret = new List<Items>();
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
             conn.Open();
-            string pridobi = "Select ID, Name from \"Items\" where @id = Sho_ID";
+            string pridobi = "Select ID, Name from \"ShoppingListItem\" where Sho_ID = \'@id\'";
             SqlCommand comm = new SqlCommand(pridobi, conn);
             comm.Parameters.AddWithValue("@id", int.Parse(IDs));
             try {
-                comm.ExecuteNonQuery();
+                //comm.ExecuteNonQuery();
                 using (var command = comm)
                 {
                     using (var reader = command.ExecuteReader())
@@ -105,16 +131,12 @@ namespace RESTService
                                 ret.Add(new Items { IDi = reader.GetInt32(0), Ime = reader.GetString(1) });
                             }   
                         }
-                        else
-                        {
-                            throw new FaultException("Izbran Shopping List ne obstaja.");
-                        }
                         conn.Close();
                     }
                 }
                 return ret;
             }
-            catch (Exception)
+            catch (SqlException)
             {
                 throw new Exception("Napaka");
             }
@@ -125,44 +147,75 @@ namespace RESTService
         public List<ShoppingList> GetShoppingLists(string ID)
         {
             int ids = 0;
-            var ret = new List<ShoppingList>();
+            //int stevilo = 0;
+            List<ShoppingList> ret = new List<ShoppingList>();
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+            SqlConnection connx = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
+            connx.Open();
             conn.Open();
             string sql = "Select Sho_ID from \"ShoppingList_Users\" where ID = '" + int.Parse(ID) + "'";
             string sql2 = "Select Name from ShoppingList where ID = @id";
+            string sql3 = "Select count(*) from ShoppingList where ID =  '"+ int.Parse(ID) + "'";
             SqlCommand comm = new SqlCommand(sql, conn);
-            SqlCommand comma = new SqlCommand(sql2, conn);
-            
-
-            using (var command = comm)
+            SqlCommand comma = new SqlCommand(sql2, connx);
+            /*SqlCommand com = new SqlCommand(sql3, connx);
+            using (var command1 = com)
             {
-                using (var reader = command.ExecuteReader())
+                using (var reader2 = command1.ExecuteReader())
                 {
-                    if (reader.HasRows)
+                    if (reader2.HasRows)
                     {
-                        while (reader.Read())
+
+                        while (reader2.Read())
                         {
-                            ids = reader.GetInt32(0);
-                            comm.Parameters.AddWithValue("@id", ids);
-                            using (var comman = comma)
-                            {
-                                using (var reader1 = comman.ExecuteReader())
-                                {
-                                    while (reader1.Read())
-                                    {
-                                        ret.Add(new ShoppingList { IDs = ids, Ime = reader.GetString(0) });
-                                    }
-                                }
-                            }
+                            stevilo = reader2.GetInt32(0);
                         }
                     }
-                    else
-                    {
-                        throw new FaultException("Za danega uporabnika ne obstaja noben Shopping List.");
-                    }
-                    conn.Close();
+                    reader2.Close();
                 }
             }
+            Object[] idji = new Object[stevilo];*/
+            using (var command = comm)
+            {
+                using ( var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    { 
+                        while (reader.Read())
+                        {
+                            /*reader.GetValues(idji);
+                            foreach (var item in idji)
+                            {
+                                comma.Parameters.AddWithValue("@id", (int) item);
+                                ids = (int)item;*/
+                            comma.Parameters.AddWithValue("@id", reader.GetInt32(0));
+                            using (var comman = comma)
+                                {
+                                    using (var reader1 = comman.ExecuteReader())
+                                    {
+                                        comma.Parameters.RemoveAt(0);
+                                        if (reader1.Read())
+                                            ret.Add(new ShoppingList { IDs = ids, Ime = reader1.GetString(0) });
+                                        //}
+                                    }
+                                    /*comma.Parameters.AddWithValue("@id", ids);
+                                    using (var comman = comma)
+                                    {
+                                        using (var reader1 = comman.ExecuteReader())
+                                        {
+                                            comma.Parameters.RemoveAt(0);
+                                            if (reader1.Read())
+                                                ret.Add(new ShoppingList { IDs = ids, Ime = reader1.GetString(0) });
+
+                                        }
+                                }*/
+                                
+                            }
+                        }
+                    }                                  
+                }
+            }
+            conn.Close();
             return ret;
         }
 
@@ -171,7 +224,7 @@ namespace RESTService
             var ret = new List<User>();
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
             conn.Open();
-            string sql = "SELECT ID, Name, Surname FROM \"User\"";
+            string sql = "SELECT ID, Name, Surname, Username, Password FROM \"User\"";
             SqlCommand comm = new SqlCommand(sql, conn);
 
             using (var command = comm)
@@ -182,18 +235,14 @@ namespace RESTService
                     {
                         while (reader.Read())
                         {
-                            ret.Add(new User { ID = reader.GetInt32(0), Ime = reader.GetString(1), Priimek = reader.GetString(2) });
+                            ret.Add(new User { ID = reader.GetInt32(0), Ime = reader.GetString(1), Priimek = reader.GetString(2), Username = reader.GetString(3), Password = reader.GetString(4) });
                             //ret.Add(new User { ID = reader.GetInt32(0) });
 
                            
                         }
-                        conn.Close();
+                        
                     }
-                    else
-                    {
-                        throw new FaultException("Noben uporabnik ne obstaja.");
-                    }
-
+                    conn.Close();
                 }
 
                 return ret;
@@ -210,17 +259,15 @@ namespace RESTService
             {
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
                 conn.Open();
-                string sql = "select ID from \"User\" where username = '@username'";
+                string sql = "select ID from \"User\" where Username = @username";
                 SqlCommand comm = new SqlCommand(sql, conn);
                 comm.Parameters.AddWithValue("@username", username);
                 try
                 {
-                    comm.ExecuteNonQuery();
                     using (var command = comm)
                     {
                         using (var reader = command.ExecuteReader())
                         {
-
                             while (reader.Read())
                             {
                                 id = reader.GetInt32(0);
@@ -242,11 +289,11 @@ namespace RESTService
 
         public bool Registration(string username, string password, string Ime, string Priimek, string number, string mail)
         {
-            try
-            {
+            /*try
+            {*/
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
                 conn.Open();
-                string preveriUporabnika = "INSERT INTO \"User\" (Name,Surname, Phonenumber,Mail, Password, Username) VALUES (, @Ime, @Priimek, @number, @Mail, @Geslo, @Username)";
+                string preveriUporabnika = "INSERT INTO \"User\" (Name,Surname, Phonenumber,Mail, Password, Username) VALUES (@Ime, @Priimek, @number, @Mail, @Geslo, @Username)";
                 SqlCommand comm = new SqlCommand(preveriUporabnika, conn);
                 comm.Parameters.AddWithValue("@Username", username);
                 comm.Parameters.AddWithValue("@Ime", Ime);
@@ -258,13 +305,14 @@ namespace RESTService
                 comm.ExecuteNonQuery();
                 conn.Close();
                 return true;
-            }
+            /*}
             catch (Exception)
             {
                 return false;
-            }
+            }*/
+            
         }
-        public void CreateNewShopingList(string IDu, string ImeSL)
+        public int CreateNewShopingList(string IDu, string ImeSL)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
             conn.Open();
@@ -277,10 +325,7 @@ namespace RESTService
             SqlCommand comma = new SqlCommand(dobID, conn);
             comma.Parameters.AddWithValue("@ime", ImeSL);
             SqlCommand comman = new SqlCommand(sql2, conn);
-            
 
-             
-            comm.ExecuteNonQuery();
             try
             {
                 comm.ExecuteNonQuery();
@@ -291,7 +336,6 @@ namespace RESTService
             }
             try
             {
-                comma.ExecuteNonQuery();
                 using (var command = comma)
                 {
                     using (var reader = command.ExecuteReader())
@@ -319,21 +363,21 @@ namespace RESTService
             {
                 throw new FaultException("Napaka pri posodobitvi baze.");
             }
+            return id;
 
         }
 
-        public bool SaveItem(string IDs, string Ime, string Cena, string IDdodal, string IDkupu)
+        public bool SaveItem(string IDs, string Ime, string IDdodal)
         {
-            Cena = "0";
-            IDkupu = null;
+            int Cena = 0;
+
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftAppConnectionString"].ConnectionString);
             conn.Open();
             string sql = "Insert into \"ShoppingListItem\" (Name,Price, AddedBy_ID, BoughtBy_ID, Sho_ID) values ( @Ime,@Cena, @IDdodal, @IDkupu, @IDs)";
             SqlCommand comm = new SqlCommand(sql, conn);
             comm.Parameters.AddWithValue("@Ime", Ime);
-            comm.Parameters.AddWithValue("@Cena", int.Parse(Cena));
+            comm.Parameters.AddWithValue("@Cena", Cena);
             comm.Parameters.AddWithValue("@IDdodal", IDdodal);
-            comm.Parameters.AddWithValue("@IDkupu", IDkupu );
             comm.Parameters.AddWithValue("@IDs", int.Parse(IDs));
 
 

@@ -16,7 +16,7 @@ namespace RESTService
         List<User> GetUsers();
 
         [OperationContract]
-        [WebGet(UriTemplate = "ShopingLists/{ID}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "ShoppingLists/{ID}", ResponseFormat = WebMessageFormat.Json)]
         List<ShoppingList> GetShoppingLists(string ID);
 
         [OperationContract]
@@ -26,16 +26,16 @@ namespace RESTService
         [WebGet(UriTemplate = "Login/{username}/{password}", ResponseFormat = WebMessageFormat.Json)]
         int Login(string username, string password);
         [OperationContract]
-        [WebInvoke(UriTemplate = "Registration/{username}/{password}/{Ime}/{Priimek}/{number}/{mail}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
+        [WebGet(UriTemplate = "Registration/{username}/{password}/{Ime}/{Priimek}/{number}/{mail}", ResponseFormat = WebMessageFormat.Json)]
         bool Registration(string username, string password, string Ime, string Priimek, string number, string mail);
         [OperationContract]
-        [WebInvoke(UriTemplate = "CreateNewShopingList/{IDu}/{ImeSL}", ResponseFormat = WebMessageFormat.Json, Method ="PUT")]
-        void CreateNewShopingList(string IDu, string ImeSL);
+        [WebGet(UriTemplate = "CreateNewShoppingList/{IDu}/{ImeSL}", ResponseFormat = WebMessageFormat.Json)]
+        int CreateNewShopingList(string IDu, string ImeSL);
         [OperationContract]
-        [WebInvoke(UriTemplate = "SaveItem/{IDs}/{Ime}/{Cena}/{IDdodal}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
-        bool SaveItem(string IDs, string Ime, string Cena, string IDdodal, string IDkupu);
+        [WebGet(UriTemplate = "SaveItem/{IDs}/{Ime}//{IDdodal}/", ResponseFormat = WebMessageFormat.Json)]
+        bool SaveItem(string IDs, string Ime, string IDdodal);
         [OperationContract]
-        [WebInvoke(UriTemplate = "AddNewUserToSL/{IDs}/{Mail}", ResponseFormat = WebMessageFormat.Json, Method = "PUT")]
+        [WebGet(UriTemplate = "AddNewUserToSL/{IDs}/{Mail}", ResponseFormat = WebMessageFormat.Json)]
         void AddNewUserToSL(string IDs, string Mail);
         
         
@@ -72,6 +72,10 @@ namespace RESTService
         public string Telefon { get; set; }
         [DataMember]
         public string Mail { get; set; }
+        [DataMember]
+        public string Username { get; set; }
+        [DataMember]
+        public string Password { get; set; }
 
     }
 
@@ -90,7 +94,7 @@ namespace RESTService
         [DataMember]
         public int ID { get; set; }
         [DataMember]
-        public string IDs { get; set; }
+        public int IDs { get; set; }
     }
 
 }
