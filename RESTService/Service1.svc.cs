@@ -113,6 +113,7 @@ namespace RESTService
         public List<Items> GetItems(string IDs)
         {
             var ret = new List<Items>();
+            Items nou = new Items();
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             conn.Open();
             string pridobi = "Select ID, Name, Price, AddedBy_ID, BoughtBy_ID, Sho_ID from \"ShoppingListItem\" where Sho_ID = @id";
@@ -120,20 +121,19 @@ namespace RESTService
             comm.Parameters.AddWithValue("@id", int.Parse(IDs));
             try {
                 //comm.ExecuteNonQuery();
-                using (var command = comm)
-                {
-                    using (var reader = command.ExecuteReader())
+                    using (var reader = comm.ExecuteReader())
                     {
                         if (reader.HasRows)
                         {
                             while (reader.Read())
                             {
-                                ret.Add(new Items { IDi = reader.GetInt32(0), Ime = reader.GetString(1), Cena = reader.GetDecimal(2), IDdodal = reader.GetInt32(3), IDkupil = reader.GetInt32(4), IDs = reader.GetInt32(5) });
-                            }   
+                            ret.Add(new Items { IDi = reader.GetInt32(0), Ime = reader.GetString(1), Cena = reader.GetDecimal(2), IDdodal = reader.GetInt32(3), IDs = reader.GetInt32(5) });
+
                         }
+                    }
                         conn.Close();
                     }
-                }
+                
                 return ret;
             }
             catch (SqlException)
@@ -288,32 +288,86 @@ namespace RESTService
             }
         }
 
-        public bool Registration(string username, string password, string Ime, string Priimek, string number, string mail)
+        public User Registration(string username, string password, string Ime, string Priimek, string number, string mail)
         {
+            User ret = new RESTService.User { ID = -1, Username = username, Ime = Ime, Priimek = Priimek, Telefon = number, Mail = mail };
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
+            conn.Open();
+            string sql = "INSERT INTO \"User\" (Name,Surname, Phonenumber,Mail, Password, Username) VALUES (@Ime, @Priimek, @number, @Mail, @Geslo, @Username)";
+            string sql2 = "Select ID from \"User\" where Username = @username";
+            SqlCommand comm = new SqlCommand(sql, conn);
             /*try
             {*/
-                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
-                conn.Open();
-                string sql = "INSERT INTO \"User\" (Name,Surname, Phonenumber,Mail, Password, Username) VALUES (@Ime, @Priimek, @number, @Mail, @Geslo, @Username)";
-                string sql2 = "INSERT INTO \"User\" (Name,Surname, Phonenumber,Mail, Password, Username) VALUES (@Ime, @Priimek, @number, @Mail, @Geslo, @Username)";
-                SqlCommand comm = new SqlCommand(sql, conn);
-                comm.Parameters.AddWithValue("@Username", username);
-                comm.Parameters.AddWithValue("@Ime", Ime);
-                comm.Parameters.AddWithValue("@Priimek", Priimek);
-                comm.Parameters.AddWithValue("@Geslo", MD5Hash(password));
-                comm.Parameters.AddWithValue("@Mail", mail);
-                comm.Parameters.AddWithValue("@number", number);
+                if (checkUsername(username) && checkMail(mail))
+                {
+                    comm.Parameters.AddWithValue("@Username", username);
+                    comm.Parameters.AddWithValue("@Ime", Ime);
+                    comm.Parameters.AddWithValue("@Priimek", Priimek);
+                    comm.Parameters.AddWithValue("@Geslo", MD5Hash(password));
+                    comm.Parameters.AddWithValue("@Mail", mail);
+                    comm.Parameters.AddWithValue("@number", number);
+                    comm.ExecuteNonQuery();
 
-                comm.ExecuteNonQuery();
-                conn.Close();
-                return true;
+                    SqlCommand comma = new SqlCommand(sql2, conn);
+                    comma.Parameters.AddWithValue("@username", username);
+                    using (var reader = comma.ExecuteReader())
+                        if (reader.Read())
+                            ret.ID = reader.GetInt32(0);
+                        else return ret;
+
+                    conn.Close();
+                    return ret;
+
+                }
+                else
+                {
+                    return ret;
+                }
+            
             /*}
             catch (Exception)
             {
-                return false;
+                return ret;
             }*/
-            
+
         }
+
+        private bool checkUsername(string username)
+        {
+            string sql = "Select Name from \"User\" where Username = @username";
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
+            conn.Open();
+            SqlCommand comm = new SqlCommand(sql, conn);
+            comm.Parameters.AddWithValue("@username", username);
+            using (var reader = comm.ExecuteReader())
+            { 
+                 if (reader.Read())
+                 {
+                    if (reader.GetString(0) != null)
+                     return false;
+                 }
+            }
+            return true;
+        }
+        private bool checkMail(string mail)
+        {
+            string sql = "select Name from \"User\" where Mail = @mail";
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
+            conn.Open();
+            SqlCommand comm = new SqlCommand(sql, conn);
+            comm.Parameters.AddWithValue("@mail", mail);
+            using (var reader = comm.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    if (reader.GetString(0) != null)
+                        return false;
+                }
+            }
+            return true;
+
+        }
+
         public ShoppingList CreateNewShopingList(string IDu, string ImeSL)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
@@ -369,8 +423,9 @@ namespace RESTService
 
         }
 
-        public bool SaveItem(string IDs, string Ime, string IDdodal)
+        public Odgovor SaveItem(string IDs, string Ime, string IDdodal)
         {
+            Odgovor ret = new Odgovor { vrednost = false };
             int Cena = 0;
             int kupu = 0;
 
@@ -391,13 +446,16 @@ namespace RESTService
             }
             catch (SqlException)
             {
+               return ret;
                throw new Exception("Napaka pri izvajanju.");
             }
-            return true;
+            ret.vrednost = true;
+            return ret;
         }
 
-        public void AddNewUserToSL(string IDs, string Mail)
+        public Odgovor AddNewUserToSL(string IDs, string Mail)
         {
+            Odgovor ret = new Odgovor { vrednost = false };
             int id = 0;
             string sql = "Select ID from \"User\" where Mail = @Mail";
             string sql2 = "INSERT INTO \"ShoppingList_Users\" (ID, Sho_ID) VALUES (@id, @IDs)";
@@ -427,7 +485,7 @@ namespace RESTService
             }
             catch (SqlException)
             {
-                throw new Exception("Napaka pri poizvedbi.");
+                return ret;
             }
             try
             {
@@ -435,22 +493,87 @@ namespace RESTService
             }
             catch (SqlException)
             {
-                throw new Exception("Napaka pri zapisovanju v bazo.");
+                return ret;
             }
+            ret.vrednost = true;
             conn.Close();
+            return ret;
 
         }
 
-        public void BuyItem(string ID, string IDs, string cena, string IDkupil)
+        public Odgovor BuyItem(string IDi, string IDs, string cena, string IDkupil)
         {
+            Odgovor ret = new Odgovor { vrednost = false };
             string sql = "update \"ShoppingListItem\" set Price = @cena, BoughtBy_ID = @idkupu where ID = @id AND Sho_ID = @ids";
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             conn.Open();
             SqlCommand comm = new SqlCommand(sql, conn);
             comm.Parameters.AddWithValue("@cena", cena);
             comm.Parameters.AddWithValue("@idkupu", IDkupil);
-            comm.Parameters.AddWithValue("@id", ID);
+            comm.Parameters.AddWithValue("@id", IDi);
             comm.Parameters.AddWithValue("@ids", IDs);
+            comm.ExecuteNonQuery();
+            conn.Close();
+            ret.vrednost = true;
+            return ret;
+        }
+
+        public List<User> GetUsersFromSL(string IDs)
+        {
+            List<User> ret = new List<User>();
+            string sql = "Select ID from ShoppingList_Users where Sho_ID = @ids";
+            string sql2 = "Select Name, Surname , Phonenumber, Mail, Username from \"User\" where ID = @id";
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
+            SqlConnection connx = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
+            conn.Open();
+            connx.Open();
+            SqlCommand comm = new SqlCommand(sql, conn);
+            comm.Parameters.AddWithValue("@ids", IDs);
+
+            using(var reader = comm.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    User nou = new RESTService.User { ID = reader.GetInt32(0) };
+                    SqlCommand comma = new SqlCommand(sql2, connx);
+                    comma.Parameters.AddWithValue("@id", nou.ID);
+                    using (var reader1 = comma.ExecuteReader())
+                    {
+                        while (reader1.Read())
+                        {
+                            nou.Ime = reader1.GetString(0);
+                            nou.Priimek = reader1.GetString(1);
+                            nou.Telefon = reader1.GetString(2);
+                            nou.Mail = reader1.GetString(3);
+                            nou.Username = reader1.GetString(4);
+                        }
+                    }
+                    ret.Add(nou);
+                    
+                }
+            }
+            return ret;
+        }
+
+        public Odgovor Calculate(string IDkupu, string IDs)
+        {
+            Odgovor ret = new Odgovor { cena = -1 };
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
+            conn.Open();
+            string sql = "select sum(Price) from ShoppingListItem where BoughtBy_ID = @idkupu and Sho_ID = @ids";
+            SqlCommand comm = new SqlCommand(sql, conn);
+            comm.Parameters.AddWithValue("@idkupu", IDkupu);
+            comm.Parameters.AddWithValue("@ids", IDs);
+            using(var reader = comm.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ret.cena = reader.GetDecimal(0);
+                }
+            }
+
+            return ret;
+
         }
     }
       
