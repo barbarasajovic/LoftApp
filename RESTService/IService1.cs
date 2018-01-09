@@ -27,19 +27,25 @@ namespace RESTService
         User Login(string username, string password);
         [OperationContract]
         [WebGet(UriTemplate = "Registration/{username}/{password}/{Ime}/{Priimek}/{number}/{mail}", ResponseFormat = WebMessageFormat.Json)]
-        bool Registration(string username, string password, string Ime, string Priimek, string number, string mail);
+        User Registration(string username, string password, string Ime, string Priimek, string number, string mail);
         [OperationContract]
         [WebGet(UriTemplate = "CreateNewShoppingList/{IDu}/{ImeSL}", ResponseFormat = WebMessageFormat.Json)]
         ShoppingList CreateNewShopingList(string IDu, string ImeSL);
         [OperationContract]
         [WebGet(UriTemplate = "SaveItem/{IDs}/{Ime}/{IDdodal}", ResponseFormat = WebMessageFormat.Json)]
-        bool SaveItem(string IDs, string Ime, string IDdodal);
+        Odgovor SaveItem(string IDs, string Ime, string IDdodal);
         [OperationContract]
         [WebGet(UriTemplate = "AddNewUserToSL/{IDs}/{Mail}", ResponseFormat = WebMessageFormat.Json)]
-        void AddNewUserToSL(string IDs, string Mail);
+        Odgovor AddNewUserToSL(string IDs, string Mail);
         [OperationContract]
-        [WebGet(UriTemplate = "BuyItem/{ID}/{IDs}/{cena}/{IDkupil}", ResponseFormat = WebMessageFormat.Json)]
-        void BuyItem(string ID, string IDs, string cena, string IDkupil);
+        [WebGet(UriTemplate = "BuyItem/{IDi}/{IDs}/{cena}/{IDkupil}", ResponseFormat = WebMessageFormat.Json)]
+        Odgovor BuyItem(string IDi, string IDs, string cena, string IDkupil);
+        [OperationContract]
+        [WebGet(UriTemplate = "UsersFromSL/{IDs}", ResponseFormat = WebMessageFormat.Json)]
+        List<User> GetUsersFromSL(string IDs);
+        [OperationContract]
+        [WebGet(UriTemplate = "Calculate/{ID}/{IDs}", ResponseFormat = WebMessageFormat.Json)]
+        Odgovor Calculate(string ID, string IDs);
 
 
     }
@@ -99,5 +105,13 @@ namespace RESTService
         [DataMember]
         public int IDs { get; set; }
     }
+    [DataContract]
+    public class Odgovor
+    {
+        [DataMember]
+        public bool vrednost { get; set; }
+        [DataMember]
+        public decimal cena { get; set; }
+    }
 
-}
+    }
