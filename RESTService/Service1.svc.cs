@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
@@ -557,20 +558,24 @@ namespace RESTService
 
         public Odgovor Calculate(string IDkupu, string IDs)
         {
-            Odgovor ret = new Odgovor { cena = -1 };
+            Odgovor ret = new Odgovor { cena = 0 };
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["LoftApp2ConnectionString"].ConnectionString);
             conn.Open();
             string sql = "select sum(Price) from ShoppingListItem where BoughtBy_ID = @idkupu and Sho_ID = @ids";
             SqlCommand comm = new SqlCommand(sql, conn);
             comm.Parameters.AddWithValue("@idkupu", IDkupu);
             comm.Parameters.AddWithValue("@ids", IDs);
-            using(var reader = comm.ExecuteReader())
+            try
             {
-                while (reader.Read())
+                using (var reader = comm.ExecuteReader())
                 {
-                    ret.cena = reader.GetDecimal(0);
+                    while (reader.Read())
+                    {
+                        ret.cena = reader.GetDecimal(0);
+                    }
                 }
             }
+            catch (SqlNullValueException) { return ret; }
 
             return ret;
 
