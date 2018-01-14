@@ -14,6 +14,7 @@ namespace RESTService
         {
             RouteTable.Routes.Add(new ServiceRoute("RESTService", new WebServiceHostFactory(), typeof(Service1)));
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            
         }
     }
 }
